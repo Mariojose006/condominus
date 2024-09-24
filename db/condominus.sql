@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 24-Set-2024 às 16:43
+-- Tempo de geração: 24-Set-2024 às 17:51
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `tb_chamado` (
   `id_usuario_solicitante` int UNSIGNED NOT NULL,
   `descricao` varchar(255) NOT NULL,
   `dt_abertura` datetime NOT NULL,
-  `status_2` int NOT NULL,
+  `status` int NOT NULL,
   PRIMARY KEY (`id_chamado`),
   KEY `tb_chamado_FKIndex1` (`id_usuario_solicitante`),
   KEY `tb_chamado_FKIndex2` (`id_tecnico`)
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `tb_chamado` (
 -- Extraindo dados da tabela `tb_chamado`
 --
 
-INSERT INTO `tb_chamado` (`id_chamado`, `id_tecnico`, `id_usuario_solicitante`, `descricao`, `dt_abertura`, `status_2`) VALUES
+INSERT INTO `tb_chamado` (`id_chamado`, `id_tecnico`, `id_usuario_solicitante`, `descricao`, `dt_abertura`, `status`) VALUES
 (1, 1, 3, 'Problema com a conexão de internet', '2024-09-22 10:00:00', 1),
 (2, 2, 4, 'Manutenção de ar condicionado', '2024-09-23 14:30:00', 2),
 (3, 1, 5, 'Troca de lâmpada na garagem', '2024-09-24 09:00:00', 0);
@@ -128,10 +128,10 @@ CREATE TABLE IF NOT EXISTS `tb_usuario` (
 
 INSERT INTO `tb_usuario` (`id_usuario`, `id_condominio`, `nome`, `email`, `telefone`, `tipo_usuario`, `senha`) VALUES
 (1, 1, 'admin', 'admin@gmail.com', '(00) 0 0000-0000', 1, '21232f297a57a5a743894a0e4a801fc3'),
-(2, 1, 'João Silva', 'joao@exemplo.com', '(11) 91234-5678', 1, 'e7d80ffeefa212b7c5c55700e4f7193e'),
-(3, 1, 'Maria Oliveira', 'maria@exemplo.com', '(11) 99876-5432', 2, '3d7fcc75ff6bfcbc40127078aa3760d5'),
-(4, 2, 'Carlos Souza', 'carlos@exemplo.com', '(21) 91234-5678', 1, '2de3dca5a6f506661af5884c103524f4'),
-(5, 2, 'Ana Costa', 'ana@exemplo.com', '(21) 99876-5432', 2, '2a373ba1edce44b21d5e0679eafb584d');
+(2, 2, 'João Silva', 'joao@exemplo.com', '(11) 91234-5678', 1, 'e7d80ffeefa212b7c5c55700e4f7193e'),
+(3, 2, 'Maria Oliveira', 'maria@exemplo.com', '(11) 99876-5432', 2, '3d7fcc75ff6bfcbc40127078aa3760d5'),
+(4, 3, 'Carlos Souza', 'carlos@exemplo.com', '(21) 91234-5678', 1, '2de3dca5a6f506661af5884c103524f4'),
+(5, 3, 'Ana Costa', 'ana@exemplo.com', '(21) 99876-5432', 2, '2a373ba1edce44b21d5e0679eafb584d');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
