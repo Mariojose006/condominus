@@ -1,12 +1,13 @@
 <?php
-//session_start();
+include('../conexao/conexao.php');
+session_start();
 
 // Verifique se o usuário está logado
-//if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['idUsuario'])) {
     // Se não estiver logado, redirecione para a página de login
-//    header("Location: index.php");
-//    exit();
-//}
+    header("Location: index.php");
+    exit();
+}
 
 // Exemplo de dados de chamados
 $chamados = [
@@ -90,16 +91,31 @@ $chamados = [
     <h2>
         <?php 
             //echo htmlspecialchars($_SESSION['user']);
-            echo "Álvaro"; 
+            $idUsuario = mysqli_real_escape_string($connection, $_SESSION['idUsuario']);
+
+            $query = "SELECT nome,id_condominio FROM tb_usuario WHERE id_usuario = $idUsuario";
+            $result = mysqli_query($connection, $query);
+            $row = mysqli_fetch_assoc($result);
+            echo htmlspecialchars($row['nome']);
+            $idCondominio = $row['id_condominio'];
         ?>
     </h2>
-    <h4 style="text-align: center;">Condomínio Flor de Liz</h4>
+    <h4 style="text-align: center;">
+        <?php
+            $query = "SELECT nome FROM tb_condominio WHERE id_condominio = $idCondominio";
+            $result = mysqli_query($connection, $query);
+            $row = mysqli_fetch_assoc($result);
+
+            echo htmlspecialchars($row['nome']);
+        ?>
+
+    </h4>
     <a href="#">ABRIR CHAMADO</a>
     <!--<a href="#">TÉCNICOS PARCEIROS</a>-->
 </div>
 
 <div class="main-content">
-    <h1>Seus Chamados</h1>
+    <h1>Chamados</h1>
     <table class="chamados">
         <thead>
             <tr>
@@ -109,16 +125,46 @@ $chamados = [
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($chamados as $chamado): ?>
+            <?php 
+                $result = $conn->query("SELECT * FROM tb_chamado");
+                $count = $result->rowCount();
+
+                if ($count > 0) {
+                    while ($row = $result->fetch(PDO::FETCH_OBJ)){
+                        if($row->status == 0){
+                            $status = 'Pendente';
+                        }else if($row->status == 1){
+                            $status = 'Andamento';
+                        }else if($row->status == 2){
+                            $status = 'Fechado';
+                        }
+            ?>
             <tr>
-                <td><?php echo htmlspecialchars($chamado['numero']); ?></td>
-                <td><?php echo htmlspecialchars($chamado['status']); ?></td>
-                <td><a href="#" class="detalhes-link">Ver detalhes &gt;&gt;</a></td>
+                <td><?php echo htmlspecialchars($row->id_chamado); ?></td>
+                <td><?php echo htmlspecialchars($status); ?></td>
+                <td><a href="chamado.php?idChamado=<?php echo $row->id_chamado?>" class="detalhes-link">Ver detalhes &gt;&gt;</a></td>
             </tr>
-            <?php endforeach; ?>
+            <?php
+                    }
+                }
+            ?>
         </tbody>
     </table>
 </div>
+
+<?php
+                
+                if($count > 0){
+                    while ($row = $result->fetch(PDO::FETCH_OBJ)) {
+                        echo ($row->id_chamado);
+                    }
+
+                }
+?>
+
+
+
+
 
 </body>
 </html>
