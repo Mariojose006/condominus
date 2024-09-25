@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 24-Set-2024 às 17:51
+-- Tempo de geração: 25-Set-2024 às 12:00
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -35,19 +35,20 @@ CREATE TABLE IF NOT EXISTS `tb_chamado` (
   `descricao` varchar(255) NOT NULL,
   `dt_abertura` datetime NOT NULL,
   `status` int NOT NULL,
+  `dt_fechamento` datetime DEFAULT NULL,
   PRIMARY KEY (`id_chamado`),
   KEY `tb_chamado_FKIndex1` (`id_usuario_solicitante`),
   KEY `tb_chamado_FKIndex2` (`id_tecnico`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `tb_chamado`
 --
 
-INSERT INTO `tb_chamado` (`id_chamado`, `id_tecnico`, `id_usuario_solicitante`, `descricao`, `dt_abertura`, `status`) VALUES
-(1, 1, 3, 'Problema com a conexão de internet', '2024-09-22 10:00:00', 1),
-(2, 2, 4, 'Manutenção de ar condicionado', '2024-09-23 14:30:00', 2),
-(3, 1, 5, 'Troca de lâmpada na garagem', '2024-09-24 09:00:00', 0);
+INSERT INTO `tb_chamado` (`id_chamado`, `id_tecnico`, `id_usuario_solicitante`, `descricao`, `dt_abertura`, `status`, `dt_fechamento`) VALUES
+(1, 1, 3, 'Problema com a conexão de internet', '2024-09-22 10:00:00', 1, NULL),
+(2, 2, 4, 'Manutenção de ar condicionado', '2024-09-23 14:30:00', 2, '2024-09-23 18:30:00'),
+(3, 1, 5, 'Troca de lâmpada na garagem', '2024-09-24 09:00:00', 0, NULL);
 
 -- --------------------------------------------------------
 
