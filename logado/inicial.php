@@ -127,11 +127,11 @@ if (!isset($_SESSION['idUsuario'])) {
 
                 if ($count > 0) {
                     while ($row = $result->fetch(PDO::FETCH_OBJ)){
-                        if($row->status == 0){
+                        if($row->status == 1){
                             $status = 'Pendente';
-                        }else if($row->status == 1){
-                            $status = 'Andamento';
                         }else if($row->status == 2){
+                            $status = 'Andamento';
+                        }else if($row->status == 3){
                             $status = 'Fechado';
                         }
             ?>

@@ -28,11 +28,11 @@
     $idSolicitante = $row['id_usuario_solicitante'];
     $idTecnico = $row['id_tecnico'];
 
-    if($row['status'] == 0){
+    if($row['status'] == 1){
         $status = 'Pendente';
-    }else if($row['status'] == 1){
-        $status = 'Andamento';
     }else if($row['status'] == 2){
+        $status = 'Andamento';
+    }else if($row['status'] == 3){
         $status = 'Fechado';
     }
 
@@ -165,6 +165,13 @@ $chamado = [
             float: right;
             font-weight: bold;
         }
+        .historico-item textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #e0e0e0;
+        }
+        
     </style>
 </head>
 <body>
@@ -235,11 +242,26 @@ $chamado = [
                     }
                 } 
             ?>
+                <div class="historico-item">
+                    <label for="descricao_problema">Novo comentário:</label>
+                    <textarea id="descricao_problema" rows="4"></textarea>
+                </div>
         </div>
 
-        <div class="form-group">
-            <button type="button">EDITAR</button>
-        </div>
+        <form action="../conexao/task_editar_chamado.php?idChamado=<?php echo $idChamado; ?>" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                    <button type="submit" name="iniciar">INICIAR ATENDIMENTO</button>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" name="comentario">EFETUAR COMENTÁRIO</button>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" name="finalizar">FINALIZAR</button>
+            </div>
+        </form>
+
     </div>
 </div>
 

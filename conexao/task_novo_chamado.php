@@ -17,7 +17,7 @@
             $stmt->bindValue(':id_usuario_solicitante', $idUsuario);
             $stmt->bindValue(':descricao', $descricao);
             $stmt->bindValue(':dt_abertura', $dataAbertura);
-            $stmt->bindValue(':status', 0);
+            $stmt->bindValue(':status', 1);
 
             $stmt->execute();
 
