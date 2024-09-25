@@ -5,7 +5,7 @@ session_start();
 // Verifique se o usuário está logado
 if (!isset($_SESSION['idUsuario'])) {
     // Se não estiver logado, redirecione para a página de login
-    header("Location: ../index.php");
+    header("Location: ../index.php?error=2");
     exit();
 }
 ?>

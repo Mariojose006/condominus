@@ -76,13 +76,13 @@
             <input type="submit" value="Entrar">
         </form>
 
-        <div class="forgot-password">
+        <!--<div class="forgot-password">
             <a href="#">Esqueceu a senha? Clique aqui</a>
         </div>
 
         <div class="register">
             <a href="#">Fazer cadastro</a>
-        </div>
+        </div>-->
 
     </div>
 </body>

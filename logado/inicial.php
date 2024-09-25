@@ -5,7 +5,7 @@ session_start();
 // Verifique se o usuário está logado
 if (!isset($_SESSION['idUsuario'])) {
     // Se não estiver logado, redirecione para a página de login
-    header("Location: index.php");
+    header("Location: ../index.php?error=2");
     exit();
 }
 ?>
@@ -41,8 +41,7 @@ if (!isset($_SESSION['idUsuario'])) {
             font-size: 18px;
         }
         .sidebar a:hover {
-            background-color: #fff;
-            color: #4CAF50;
+            color: #ff2d00
         }
         .sidebar a.back-btn {
             background-color: #007BFF;
@@ -107,6 +106,7 @@ if (!isset($_SESSION['idUsuario'])) {
 
     </h4>
     <a href="novo_chamado.php" class="back-btn">ABRIR CHAMADO</a>
+    <a href="../conexao/logout.php">Sair</a>
 </div>
 
 <div class="main-content">
@@ -115,6 +115,7 @@ if (!isset($_SESSION['idUsuario'])) {
         <thead>
             <tr>
                 <th>NÚMERO CHAMADO</th>
+                <th>DATA DE ABERTURA</th>
                 <th>STATUS</th>
                 <th></th>
             </tr>
@@ -136,6 +137,13 @@ if (!isset($_SESSION['idUsuario'])) {
             ?>
             <tr>
                 <td><?php echo htmlspecialchars($row->id_chamado); ?></td>
+                <td>
+                    <?php
+                            $data = new DateTime($row->dt_abertura);
+                            $data_br = $data->format('d/m/Y H:i:s');
+                            echo htmlspecialchars($data_br);
+                    ?>
+                </td>
                 <td><?php echo htmlspecialchars($status); ?></td>
                 <td><a href="chamado.php?idChamado=<?php echo $row->id_chamado?>" class="detalhes-link">Ver detalhes &gt;&gt;</a></td>
             </tr>
