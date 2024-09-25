@@ -5,7 +5,7 @@ session_start();
 // Verifique se o usuário está logado
 if (!isset($_SESSION['idUsuario'])) {
     // Se não estiver logado, redirecione para a página de login
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -15,7 +15,7 @@ if (!isset($_SESSION['idUsuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chamados</title>
+    <title>Condôminus - Cadastro de Chamado</title>
     <style>
         body {
             margin: 0;
@@ -54,39 +54,56 @@ if (!isset($_SESSION['idUsuario'])) {
             margin-left: 250px;
             padding: 20px;
         }
-        .chamados {
-            width: 100%;
-            margin: 0 auto;
-            background-color: #f9f9f9;
-            border-collapse: collapse;
-        }
-        .chamados th, .chamados td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        .chamados th {
+        .main-content h1 {
             background-color: #000;
-            color: #fff;
+            color: white;
+            padding: 10px;
+            text-align: center;
         }
-        .chamados tr:hover {
-            background-color: #f1f1f1;
+        .form-container {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .detalhes-link {
-            text-decoration: none;
-            color: #0000EE;
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
             font-weight: bold;
+            margin-bottom: 5px;
         }
-        .detalhes-link:hover {
-            color: #FF0000;
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="file"] {
+            display: block;
+            margin-top: 10px;
+        }
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <h2>
-        <?php
+    <h2><?php 
             $idUsuario = mysqli_real_escape_string($connection, $_SESSION['idUsuario']);
 
             $query = "SELECT nome,id_condominio FROM tb_usuario WHERE id_usuario = $idUsuario";
@@ -94,8 +111,7 @@ if (!isset($_SESSION['idUsuario'])) {
             $row = mysqli_fetch_assoc($result);
             echo htmlspecialchars($row['nome']);
             $idCondominio = $row['id_condominio'];
-        ?>
-    </h2>
+        ?></h2>
     <h4 style="text-align: center;">
         <?php
             $query = "SELECT nome FROM tb_condominio WHERE id_condominio = $idCondominio";
@@ -106,60 +122,23 @@ if (!isset($_SESSION['idUsuario'])) {
         ?>
 
     </h4>
-    <a href="novo_chamado.php" class="back-btn">ABRIR CHAMADO</a>
+    <a href="inicial.php" class="back-btn">← VOLTAR</a>
 </div>
 
 <div class="main-content">
-    <h1>Chamados</h1>
-    <table class="chamados">
-        <thead>
-            <tr>
-                <th>NÚMERO CHAMADO</th>
-                <th>STATUS</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-                $result = $conn->query("SELECT * FROM tb_chamado");
-                $count = $result->rowCount();
-
-                if ($count > 0) {
-                    while ($row = $result->fetch(PDO::FETCH_OBJ)){
-                        if($row->status == 0){
-                            $status = 'Pendente';
-                        }else if($row->status == 1){
-                            $status = 'Andamento';
-                        }else if($row->status == 2){
-                            $status = 'Fechado';
-                        }
-            ?>
-            <tr>
-                <td><?php echo htmlspecialchars($row->id_chamado); ?></td>
-                <td><?php echo htmlspecialchars($status); ?></td>
-                <td><a href="chamado.php?idChamado=<?php echo $row->id_chamado?>" class="detalhes-link">Ver detalhes &gt;&gt;</a></td>
-            </tr>
-            <?php
-                    }
-                }
-            ?>
-        </tbody>
-    </table>
+    <h1>DADOS DO CHAMADO</h1>
+    <div class="form-container">
+        <form action="../conexao/task_novo_chamado.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="resumo">Descrição:</label>
+                <textarea id="resumo" name="descricao" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" name="register">CADASTRAR</button>
+            </div>
+        </form>
+    </div>
 </div>
-
-<?php
-                
-                if($count > 0){
-                    while ($row = $result->fetch(PDO::FETCH_OBJ)) {
-                        echo ($row->id_chamado);
-                    }
-
-                }
-?>
-
-
-
-
 
 </body>
 </html>
