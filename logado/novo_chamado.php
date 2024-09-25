@@ -41,8 +41,7 @@ if (!isset($_SESSION['idUsuario'])) {
             font-size: 18px;
         }
         .sidebar a:hover {
-            background-color: #fff;
-            color: #4CAF50;
+            color: #ff2d00
         }
         .sidebar a.back-btn {
             background-color: #007BFF;
@@ -123,6 +122,7 @@ if (!isset($_SESSION['idUsuario'])) {
 
     </h4>
     <a href="inicial.php" class="back-btn">← VOLTAR</a>
+    <a href="../conexao/logout.php">Sair</a>
 </div>
 
 <div class="main-content">
