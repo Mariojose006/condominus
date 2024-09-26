@@ -44,18 +44,6 @@
     $row = mysqli_fetch_assoc($result);
     
     $nomeSolicitante = $row['nome'];
-
-
-
-$chamado = [
-    'aberto_por' => 'Felipa Magalhães',
-    'problema' => 'Vazamento no encanamento',
-    'descricao_problema' => 'Vazamento constante no encanamento do banheiro.',
-    'responsavel' => 'Técnico João Silva',
-    'historico' => [
-        ['data' => '03-04-2024', 'descricao' => 'Foi feito isso e aquilo.']
-    ]
-];
 ?>
 
 <!DOCTYPE html>
@@ -239,24 +227,50 @@ $chamado = [
                     }
                 } 
             ?>
+
+            
+            
                 <div class="historico-item">
         <form action="../conexao/task_editar_chamado.php?idChamado=<?php echo $idChamado; ?>&idTecnico=<?php echo $_SESSION['idUsuario']?>" method="POST" enctype="multipart/form-data">
-                    <label for="descricao_problema">Novo comentário:</label>
-                    <textarea id="descricao_problema" rows="4" name="descricaoComentario"></textarea>
+                    
+                <?php
+                    if($status != 'Fechado' && $status != 'Pendente'){
+                        echo ("<label for='descricao_problema'>Novo comentário:</label>");
+                        echo ("<textarea id='descricao_problema' rows='4' name='descricaoComentario'></textarea>");
+                    }
+                ?>
+
+
+
                 </div>
         </div>
 
         
             <div class="form-group">
-                    <button type="submit" name="iniciar">INICIAR ATENDIMENTO</button>
+                <?php 
+                    //se finalizado não aparece
+                    if($status != 'Fechado' && $status != 'Andamento'){
+                        echo ("<button type='submit' name='iniciar'>INICIAR ATENDIMENTO</button>");
+                    }
+                ?>
             </div>
 
             <div class="form-group">
-                <button type="submit" name="comentario">EFETUAR COMENTÁRIO</button>
+                <?php 
+                    //se finalizado não aparece
+                    if($status != 'Fechado' && $status != 'Pendente'){
+                        echo ("<button type='submit' name='comentario'>EFETUAR COMENTÁRIO</button>");
+                    }
+                ?>
             </div>
 
             <div class="form-group">
-                <button type="submit" name="finalizar">FINALIZAR</button>
+                <?php 
+                    //se já finalizado não aparece
+                    if($status != 'Fechado' && $status != 'Pendente'){
+                        echo ("<button type='submit' name='iniciar'>FINALIZAR</button>");
+                    }
+                ?>
             </div>
         </form>
 
