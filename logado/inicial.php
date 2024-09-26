@@ -88,16 +88,17 @@ if (!isset($_SESSION['idUsuario'])) {
         <?php
             $idUsuario = mysqli_real_escape_string($connection, $_SESSION['idUsuario']);
 
-            $query = "SELECT nome,id_condominio FROM tb_usuario WHERE id_usuario = $idUsuario";
+            $query = "SELECT * FROM tb_usuario WHERE id_usuario = $idUsuario";
             $result = mysqli_query($connection, $query);
             $row = mysqli_fetch_assoc($result);
             echo htmlspecialchars($row['nome']);
             $idCondominio = $row['id_condominio'];
+            $tipoUsuario = $row['tipo_usuario'];
         ?>
     </h2>
     <h4 style="text-align: center;">
         <?php
-            $query = "SELECT nome FROM tb_condominio WHERE id_condominio = $idCondominio";
+            $query = "SELECT * FROM tb_condominio WHERE id_condominio = $idCondominio";
             $result = mysqli_query($connection, $query);
             $row = mysqli_fetch_assoc($result);
 
@@ -122,7 +123,14 @@ if (!isset($_SESSION['idUsuario'])) {
         </thead>
         <tbody>
             <?php 
-                $result = $conn->query("SELECT * FROM tb_chamado");
+                //if 1 admin 2 tecnico 3 usuario
+                if($tipoUsuario == 1){
+                    $result = $conn->query("SELECT * FROM tb_chamado");
+                }elseif($tipoUsuario == 2){
+                    $result = $conn->query("SELECT * FROM tb_chamado WHERE id_tecnico = $idUsuario");
+                }elseif($tipoUsuario == 3){
+                    $result = $conn->query("SELECT * FROM tb_chamado WHERE id_usuario_solicitante = $idUsuario");
+                }
                 $count = $result->rowCount();
 
                 if ($count > 0) {

@@ -9,10 +9,7 @@
         exit();
     }
 
-    // Aqui você pode fazer a busca do chamado com base no ID do chamado passado por GET ou POST
     $idChamado = $_GET['idChamado'];
-    // Simulação de dados para exibir na página
-    //echo "<script>alert('$idChamado');</script>";
 
     $query = "SELECT * FROM tb_chamado WHERE id_chamado = $idChamado";
     $result = mysqli_query($connection, $query);
