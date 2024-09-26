@@ -129,7 +129,7 @@ if (!isset($_SESSION['idUsuario'])) {
             <?php 
                 //if 1 admin 2 tecnico 3 usuario
                 if($tipoUsuario == 1){
-                    $result = $conn->query("SELECT * FROM tb_chamado");
+                    $result = $conn->query("SELECT * FROM tb_chamado ORDER BY dt_abertura DESC");
                 }elseif($tipoUsuario == 2){
                     $result = $conn->query("SELECT * FROM tb_chamado WHERE id_tecnico = $idUsuario");
                 }elseif($tipoUsuario == 3){
