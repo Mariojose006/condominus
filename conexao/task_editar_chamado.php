@@ -26,7 +26,6 @@
         $stmt->execute();
 
         header("location: ../logado/chamado.php?idChamado=$idChamado");
-        
     }
 
 
@@ -60,7 +59,20 @@
         
     }
 
+    if(isset($_POST['transferir'])) {
+        $idTecnico = $_POST['idNovoTecnico'];
+        if($idTecnico != 0){
+            $idChamado = $_GET['idChamado'];
+            
+            $stmt = $conn->prepare("UPDATE tb_chamado SET id_tecnico = :id_tecnico WHERE id_chamado = :id_chamado");
+            
+            $stmt->bindValue(':id_chamado', $idChamado, PDO::PARAM_INT);
+            $stmt->bindValue(':id_tecnico', $idTecnico, PDO::PARAM_INT);
+            $stmt->execute();
 
+            header("location: ../logado/chamado.php?idChamado=$idChamado");
+        }
+    }
 
 
 ?>

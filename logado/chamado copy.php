@@ -157,7 +157,6 @@
             background-color: #e0e0e0;
         }
         
-        
     </style>
 </head>
 <body>
@@ -187,128 +186,95 @@
     <a href="../conexao/logout.php">Sair</a>
 </div>
 
-    <form action="../conexao/task_editar_chamado.php?idChamado=<?php echo $idChamado; ?>&idTecnico=<?php echo $_SESSION['idUsuario']?>" method="POST" enctype="multipart/form-data">
-    <div class="main-content">
-    
-        <h1>CHAMADO <?php echo $idChamado?></h1>
-        <div class="form-container">
-            <div class="form-group">
-                <label for="aberto_por">Aberto por:</label>
-                <input type="text" id="aberto_por" value="<?php echo $nomeSolicitante; ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label for="descricao_problema">Descrição do Problema:</label>
-                <textarea id="descricao_problema" rows="4" readonly><?php echo htmlspecialchars($descricao); ?></textarea>
-            </div>
-            <div class="form-group">
-                <label for="responsavel">Responsável:</label>
-                <input type="text" id="responsavel" value="<?php echo $nomeTecnico; ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label for="responsavel">Status:</label>
-                <input type="text" id="responsavel" value=" <?php echo htmlspecialchars($status); ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label for="responsavel">Abertura:</label>
-                <input type="text" id="responsavel" value=" <?php echo htmlspecialchars($dataAbertura); ?>" readonly>
-            </div>
+<div class="main-content">
+    <h1>CHAMADO <?php echo $idChamado?></h1>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="aberto_por">Aberto por:</label>
+            <input type="text" id="aberto_por" value="<?php echo $nomeSolicitante; ?>" readonly>
+        </div>
+        <div class="form-group">
+            <label for="descricao_problema">Descrição do Problema:</label>
+            <textarea id="descricao_problema" rows="4" readonly><?php echo htmlspecialchars($descricao); ?></textarea>
+        </div>
+        <div class="form-group">
+            <label for="responsavel">Responsável:</label>
+            <input type="text" id="responsavel" value="<?php echo $nomeTecnico; ?>" readonly>
+        </div>
+        <div class="form-group">
+            <label for="responsavel">Status:</label>
+            <input type="text" id="responsavel" value=" <?php echo htmlspecialchars($status); ?>" readonly>
+        </div>
+        <div class="form-group">
+            <label for="responsavel">Abertura:</label>
+            <input type="text" id="responsavel" value=" <?php echo htmlspecialchars($dataAbertura); ?>" readonly>
+        </div>
+        
 
-
-
-            <?php //so aparece se o chamado não estiver fechado 
-                if($status != 'Fechado'){
-                    echo ("<div class='form-group'>");
-                    echo ("<label for='transferir-tecnico'>Transferir Chamado para:</label>");
-                    
-                    echo ("<select id='transferir-tecnico' name='idNovoTecnico'>");
-                        echo ("<option value='0'>Selecione um técnico</option>");
-                        $result = $conn->query("SELECT * FROM tb_usuario WHERE tipo_usuario = 2");
-                        $count = $result->rowCount();
-                        if ($count > 0) {
-                            while ($row = $result->fetch(PDO::FETCH_OBJ)){
-                                echo ("<option value='$row->id_usuario'>$row->nome</option>");
-                            }
-                        }
-
-                    echo ("</select>");
-                    echo ("</div>");
-            
-                        echo("<div class='form-group'>");
-                            echo ("<button type='submit' name='transferir'>Transferir</button>");
-                        echo ("</div>");
-                }
-            
-            
-            
+        <div class="historico-container">
+            <h3>Histórico:</h3>
+            <?php
+                $result = $conn->query("SELECT * FROM tb_comentario where id_chamado = $idChamado");
+                $count = $result->rowCount();
+                if ($count > 0) {
+                    while ($row = $result->fetch(PDO::FETCH_OBJ)){
+                        $data = new DateTime($row->dt_comentario);
+                        $data = $data->format('d/m/Y H:i:s');
             ?>
+                <div class="historico-item">
+                    <p><?php echo htmlspecialchars($row->descricao); ?></p>
+                    <span><?php echo htmlspecialchars($data); ?></span>
+                </div>
+            <?php 
+                    }
+                } 
+            ?>
+
             
             
-
-            <?php ?>
-
-            <div class="historico-container">
-                <h3>Histórico:</h3>
+                <div class="historico-item">
+        <form action="../conexao/task_editar_chamado.php?idChamado=<?php echo $idChamado; ?>&idTecnico=<?php echo $_SESSION['idUsuario']?>" method="POST" enctype="multipart/form-data">
+                    
                 <?php
-                    $result = $conn->query("SELECT * FROM tb_comentario where id_chamado = $idChamado");
-                    $count = $result->rowCount();
-                    if ($count > 0) {
-                        while ($row = $result->fetch(PDO::FETCH_OBJ)){
-                            $data = new DateTime($row->dt_comentario);
-                            $data = $data->format('d/m/Y H:i:s');
+                    if($status != 'Fechado' && $status != 'Pendente'){
+                        echo ("<label for='descricao_problema'>Novo comentário:</label>");
+                        echo ("<textarea id='descricao_problema' rows='4' name='descricaoComentario'></textarea>");
+                    }
                 ?>
-                    <div class="historico-item">
-                        <p><?php echo htmlspecialchars($row->descricao); ?></p>
-                        <span><?php echo htmlspecialchars($data); ?></span>
-                    </div>
+
+
+
+                </div>
+        </div>
+
+        
+            <div class="form-group">
                 <?php 
-                        }
-                    } 
+                    //se finalizado não aparece
+                    if($status != 'Fechado' && $status != 'Andamento' && $tipoUsuario != 3){
+                        echo ("<button type='submit' name='iniciar'>INICIAR ATENDIMENTO</button>");
+                    }
                 ?>
-
-                
-                
-                    <div class="historico-item">
-                        
-                    <?php
-                        if($status != 'Fechado' && $status != 'Pendente'){
-                            echo ("<label for='descricao_problema'>Novo comentário:</label>");
-                            echo ("<textarea id='descricao_problema' rows='4' name='descricaoComentario'></textarea>");
-                        }
-                    ?>
-
-
-
-                    </div>
             </div>
 
-            
-                <div class="form-group">
-                    <?php 
-                        //se finalizado não aparece
-                        if($status != 'Fechado' && $status != 'Andamento' && $tipoUsuario != 3){
-                            echo ("<button type='submit' name='iniciar'>INICIAR ATENDIMENTO</button>");
-                        }
-                    ?>
-                </div>
+            <div class="form-group">
+                <?php 
+                    //se finalizado não aparece
+                    if($status != 'Fechado' && $status != 'Pendente' && $tipoUsuario != 3){
+                        echo ("<button type='submit' name='comentario'>EFETUAR COMENTÁRIO</button>");
+                    }
+                ?>
+            </div>
 
-                <div class="form-group">
-                    <?php 
-                        //se finalizado não aparece
-                        if($status != 'Fechado' && $status != 'Pendente' && $tipoUsuario != 3){
-                            echo ("<button type='submit' name='comentario'>EFETUAR COMENTÁRIO</button>");
-                        }
-                    ?>
-                </div>
-
-                <div class="form-group">
-                    <?php 
-                        //se já finalizado não aparece
-                        if($status != 'Fechado' && $status != 'Pendente' && $tipoUsuario != 3){
-                            echo ("<button type='submit' name='iniciar'>FINALIZAR</button>");
-                        }
-                    ?>
-                </div>
-    </form>
+            <div class="form-group">
+                <?php 
+                    //se já finalizado não aparece
+                    if($status != 'Fechado' && $status != 'Pendente' && $tipoUsuario != 3){
+                        echo ("<button type='submit' name='iniciar'>FINALIZAR</button>");
+                    }
+                ?>
+            </div>
+        </form>
 
     </div>
 </div>
