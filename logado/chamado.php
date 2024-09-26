@@ -243,12 +243,13 @@ $chamado = [
                 } 
             ?>
                 <div class="historico-item">
+        <form action="../conexao/task_editar_chamado.php?idChamado=<?php echo $idChamado; ?>&idTecnico=<?php echo $_SESSION['idUsuario']?>" method="POST" enctype="multipart/form-data">
                     <label for="descricao_problema">Novo comentário:</label>
-                    <textarea id="descricao_problema" rows="4"></textarea>
+                    <textarea id="descricao_problema" rows="4" name="descricaoComentario"></textarea>
                 </div>
         </div>
 
-        <form action="../conexao/task_editar_chamado.php?idChamado=<?php echo $idChamado; ?>" method="POST" enctype="multipart/form-data">
+        
             <div class="form-group">
                     <button type="submit" name="iniciar">INICIAR ATENDIMENTO</button>
             </div>
