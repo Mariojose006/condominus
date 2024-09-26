@@ -44,6 +44,7 @@
     $row = mysqli_fetch_assoc($result);
     
     $nomeSolicitante = $row['nome'];
+    $telefone = $row['telefone']
 ?>
 
 <!DOCTYPE html>
@@ -195,9 +196,13 @@
     
         <h1>CHAMADO <?php echo $idChamado?></h1>
         <div class="form-container">
-            <div class="form-group">
+        <div class="form-group">
                 <label for="aberto_por">Aberto por:</label>
                 <input type="text" id="aberto_por" value="<?php echo $nomeSolicitante; ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="aberto_por">Telefone:</label>
+                <input type="text" id="aberto_por" value="<?php echo $telefone; ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="descricao_problema">Descrição do Problema:</label>
