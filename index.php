@@ -6,7 +6,7 @@
     <title>Condôminus - Login</title>
     <style>
         body {
-            background-color: #b3c6ff;
+            background-color: #101E38;
             font-family: Arial, sans-serif;
         }
         .login-container {

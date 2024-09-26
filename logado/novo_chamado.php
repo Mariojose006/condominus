@@ -23,19 +23,22 @@ if (!isset($_SESSION['idUsuario'])) {
         }
         .sidebar {
             width: 250px;
-            background-color: #b3c6ff;
+            background-color: #101E38;
             height: 100vh;
             position: fixed;
             padding-top: 20px;
         }
         .sidebar h2 {
-            color: #000;
+            color: white;
             text-align: center;
+        }
+        .sidebar h4 {
+            color: white;
         }
         .sidebar a {
             display: block;
             padding: 10px;
-            color: #000;
+            color: white;
             text-decoration: none;
             text-align: center;
             font-size: 18px;

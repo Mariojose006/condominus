@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 25-Set-2024 às 12:00
--- Versão do servidor: 8.0.31
--- versão do PHP: 8.0.26
+-- Tempo de geração: 26/09/2024 às 14:12
+-- Versão do servidor: 8.3.0
+-- Versão do PHP: 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_chamado`
+-- Estrutura para tabela `tb_chamado`
 --
 
 DROP TABLE IF EXISTS `tb_chamado`;
@@ -42,18 +42,18 @@ CREATE TABLE IF NOT EXISTS `tb_chamado` (
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Extraindo dados da tabela `tb_chamado`
+-- Despejando dados para a tabela `tb_chamado`
 --
 
 INSERT INTO `tb_chamado` (`id_chamado`, `id_tecnico`, `id_usuario_solicitante`, `descricao`, `dt_abertura`, `status`, `dt_fechamento`) VALUES
-(1, 1, 3, 'Problema com a conexão de internet', '2024-09-22 10:00:00', 1, NULL),
-(2, 2, 4, 'Manutenção de ar condicionado', '2024-09-23 14:30:00', 2, '2024-09-23 18:30:00'),
-(3, 1, 5, 'Troca de lâmpada na garagem', '2024-09-24 09:00:00', 0, NULL);
+(1, 4, 3, 'Problema com a conexão de internet', '2024-09-22 10:00:00', 2, NULL),
+(2, 2, 4, 'Manutenção de ar condicionado', '2024-09-23 14:30:00', 3, '2024-09-23 18:30:00'),
+(3, 2, 5, 'Troca de lâmpada na garagem', '2024-09-24 09:00:00', 1, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_comentario`
+-- Estrutura para tabela `tb_comentario`
 --
 
 DROP TABLE IF EXISTS `tb_comentario`;
@@ -69,18 +69,17 @@ CREATE TABLE IF NOT EXISTS `tb_comentario` (
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Extraindo dados da tabela `tb_comentario`
+-- Despejando dados para a tabela `tb_comentario`
 --
 
 INSERT INTO `tb_comentario` (`id_comentario`, `id_tecnico`, `id_chamado`, `dt_comentario`, `descricao`) VALUES
 (1, 1, 1, '2024-09-22 12:00:00', 'Visitado o local, problema identificado. Solução em andamento.'),
-(2, 2, 2, '2024-09-23 16:00:00', 'Ar condicionado consertado. Revisão recomendada em 6 meses.'),
-(3, 1, 3, '2024-09-24 10:00:00', 'Lâmpada trocada com sucesso.');
+(2, 2, 2, '2024-09-23 16:00:00', 'Ar condicionado consertado. Revisão recomendada em 6 meses.');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_condominio`
+-- Estrutura para tabela `tb_condominio`
 --
 
 DROP TABLE IF EXISTS `tb_condominio`;
@@ -96,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `tb_condominio` (
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Extraindo dados da tabela `tb_condominio`
+-- Despejando dados para a tabela `tb_condominio`
 --
 
 INSERT INTO `tb_condominio` (`id_condominio`, `nome`, `cep`, `rua`, `numero`, `cidade`, `estado`) VALUES
@@ -107,7 +106,7 @@ INSERT INTO `tb_condominio` (`id_condominio`, `nome`, `cep`, `rua`, `numero`, `c
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_usuario`
+-- Estrutura para tabela `tb_usuario`
 --
 
 DROP TABLE IF EXISTS `tb_usuario`;
@@ -124,15 +123,15 @@ CREATE TABLE IF NOT EXISTS `tb_usuario` (
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Extraindo dados da tabela `tb_usuario`
+-- Despejando dados para a tabela `tb_usuario`
 --
 
 INSERT INTO `tb_usuario` (`id_usuario`, `id_condominio`, `nome`, `email`, `telefone`, `tipo_usuario`, `senha`) VALUES
 (1, 1, 'admin', 'admin@gmail.com', '(00) 0 0000-0000', 1, '21232f297a57a5a743894a0e4a801fc3'),
-(2, 2, 'João Silva', 'joao@exemplo.com', '(11) 91234-5678', 1, 'e7d80ffeefa212b7c5c55700e4f7193e'),
-(3, 2, 'Maria Oliveira', 'maria@exemplo.com', '(11) 99876-5432', 2, '3d7fcc75ff6bfcbc40127078aa3760d5'),
-(4, 3, 'Carlos Souza', 'carlos@exemplo.com', '(21) 91234-5678', 1, '2de3dca5a6f506661af5884c103524f4'),
-(5, 3, 'Ana Costa', 'ana@exemplo.com', '(21) 99876-5432', 2, '2a373ba1edce44b21d5e0679eafb584d');
+(2, 2, 'João Silva', 'joao@exemplo.com', '(11) 91234-5678', 2, 'dccd96c256bc7dd39bae41a405f25e43'),
+(3, 2, 'Maria Oliveira', 'maria@exemplo.com', '(11) 99876-5432', 3, '263bce650e68ab4e23f28263760b9fa5'),
+(4, 3, 'Carlos Souza', 'carlos@exemplo.com', '(21) 91234-5678', 2, '2de3dca5a6f506661af5884c103524f4'),
+(5, 3, 'Ana Costa', 'ana@exemplo.com', '(21) 99876-5432', 3, '2a373ba1edce44b21d5e0679eafb584d');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
