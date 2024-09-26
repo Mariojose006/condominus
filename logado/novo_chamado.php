@@ -15,6 +15,7 @@ if (!isset($_SESSION['idUsuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../imgs/icon.jpeg" type="image/png">
     <title>Condôminus - Cadastro de Chamado</title>
     <style>
         body {
