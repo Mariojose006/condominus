@@ -18,8 +18,8 @@
     $data = new DateTime($row['dt_abertura']);
     $dataAbertura = $data->format('d/m/Y H:i:s');
 
-    $data = new DateTime($row['dt_fechamento']);
-    $dataFechamento = $data->format('d/m/Y H:i:s');
+    //$data = new DateTime($row['dt_fechamento']);
+    //$dataFechamento = $data->format('d/m/Y H:i:s');
 
     $descricao = $row['descricao'];
     $idSolicitante = $row['id_usuario_solicitante'];
@@ -165,15 +165,16 @@
     <h2><?php 
             $idUsuario = mysqli_real_escape_string($connection, $_SESSION['idUsuario']);
 
-            $query = "SELECT nome,id_condominio FROM tb_usuario WHERE id_usuario = $idUsuario";
+            $query = "SELECT * FROM tb_usuario WHERE id_usuario = $idUsuario";
             $result = mysqli_query($connection, $query);
             $row = mysqli_fetch_assoc($result);
             echo htmlspecialchars($row['nome']);
             $idCondominio = $row['id_condominio'];
+            $tipoUsuario = $row['tipo_usuario'];
         ?></h2>
     <h4 style="text-align: center;">
         <?php
-            $query = "SELECT nome FROM tb_condominio WHERE id_condominio = $idCondominio";
+            $query = "SELECT * FROM tb_condominio WHERE id_condominio = $idCondominio";
             $result = mysqli_query($connection, $query);
             $row = mysqli_fetch_assoc($result);
 
@@ -249,7 +250,7 @@
             <div class="form-group">
                 <?php 
                     //se finalizado não aparece
-                    if($status != 'Fechado' && $status != 'Andamento'){
+                    if($status != 'Fechado' && $status != 'Andamento' && $tipoUsuario != 3){
                         echo ("<button type='submit' name='iniciar'>INICIAR ATENDIMENTO</button>");
                     }
                 ?>
@@ -258,7 +259,7 @@
             <div class="form-group">
                 <?php 
                     //se finalizado não aparece
-                    if($status != 'Fechado' && $status != 'Pendente'){
+                    if($status != 'Fechado' && $status != 'Pendente' && $tipoUsuario != 3){
                         echo ("<button type='submit' name='comentario'>EFETUAR COMENTÁRIO</button>");
                     }
                 ?>
@@ -267,7 +268,7 @@
             <div class="form-group">
                 <?php 
                     //se já finalizado não aparece
-                    if($status != 'Fechado' && $status != 'Pendente'){
+                    if($status != 'Fechado' && $status != 'Pendente' && $tipoUsuario != 3){
                         echo ("<button type='submit' name='iniciar'>FINALIZAR</button>");
                     }
                 ?>

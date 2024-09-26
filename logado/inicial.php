@@ -117,6 +117,7 @@ if (!isset($_SESSION['idUsuario'])) {
             <tr>
                 <th>NÚMERO CHAMADO</th>
                 <th>DATA DE ABERTURA</th>
+                <th>DATA DE FECHAMENTO</th>
                 <th>STATUS</th>
                 <th></th>
             </tr>
@@ -150,6 +151,17 @@ if (!isset($_SESSION['idUsuario'])) {
                             $data = new DateTime($row->dt_abertura);
                             $data_br = $data->format('d/m/Y H:i:s');
                             echo htmlspecialchars($data_br);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                        if($row->dt_fechamento != NULL){
+                            $data = new DateTime($row->dt_fechamento);
+                            $data_br = $data->format('d/m/Y H:i:s');
+                            echo htmlspecialchars($data_br);
+                        }else{
+                            echo htmlspecialchars("-");
+                        }
                     ?>
                 </td>
                 <td><?php echo htmlspecialchars($status); ?></td>
