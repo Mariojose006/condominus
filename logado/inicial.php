@@ -83,6 +83,61 @@ if (!isset($_SESSION['idUsuario'])) {
         .detalhes-link:hover {
             color: #FF0000;
         }
+        .filter-container {
+            display: flex;
+            align-items: center;
+            padding-bottom: 5px;
+        }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+        }
+
+        .select-box {
+            width: 100%;
+            height: 40px;
+            padding: 0 10px;
+            border: none;
+            border-radius: 50px;
+            background-color: #e0e0e0;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .select-box:focus {
+            outline: none;
+        }
+
+        .custom-select:after {
+            content: '\25BC';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .filter-button {
+            height: 40px;
+            margin-left: 10px;
+            padding: 0 20px;
+            border: none;
+            border-radius: 50px;
+            background-color: #4caf50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .filter-button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -116,6 +171,20 @@ if (!isset($_SESSION['idUsuario'])) {
 
 <div class="main-content">
     <h1>Chamados</h1>
+    <form action="./inicial.php" method="POST" enctype="multipart/form-data">
+        <div class="filter-container">
+            <div class="custom-select">
+                <select class="select-box" name='filtro'>
+                    <option value="0">Todos</option>
+                    <option value="1">Pendente</option>
+                    <option value="2">Andamento</option>
+                    <option value="3">Fechado</option>
+                </select>
+            </div>
+            <button class="filter-button" name='filtrar'>Filtrar</button>
+        </div>
+    </form>
+
     <table class="chamados">
         <thead>
             <tr>
@@ -128,13 +197,32 @@ if (!isset($_SESSION['idUsuario'])) {
         </thead>
         <tbody>
             <?php 
+                $complemento = '';
+                if(isset($_POST['filtrar'])){
+                    $filtro = $_POST['filtro'];
+                    
+                    if($filtro == '1'){
+                        $complemento = " AND status = 1";
+                    }elseif($filtro == '2'){
+                        $complemento = " AND status = 2";
+                    }elseif($filtro == '3'){
+                        $complemento = " AND status = 3";
+                    }
+                }
+
+
                 //if 1 admin 2 tecnico 3 usuario
                 if($tipoUsuario == 1){
-                    $result = $conn->query("SELECT * FROM tb_chamado ORDER BY dt_abertura DESC");
+                    if(isset($filtro)&& $filtro != '0'){
+                        $result = $conn->query("SELECT * FROM tb_chamado WHERE status = $filtro ORDER BY dt_abertura DESC");
+                    }else{
+                        $result = $conn->query("SELECT * FROM tb_chamado ORDER BY dt_abertura DESC");
+                    }
+                    
                 }elseif($tipoUsuario == 2){
-                    $result = $conn->query("SELECT * FROM tb_chamado WHERE id_tecnico = $idUsuario");
+                    $result = $conn->query("SELECT * FROM tb_chamado WHERE id_tecnico = $idUsuario$complemento");
                 }elseif($tipoUsuario == 3){
-                    $result = $conn->query("SELECT * FROM tb_chamado WHERE id_usuario_solicitante = $idUsuario");
+                    $result = $conn->query("SELECT * FROM tb_chamado WHERE id_usuario_solicitante = $idUsuario$complemento");
                 }
                 $count = $result->rowCount();
 
