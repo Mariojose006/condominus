@@ -161,6 +161,25 @@
             border-radius: 4px;
             background-color: #e0e0e0;
         }
+
+        .select-box {
+            width: 100%;
+            height: 40px;
+            padding: 0 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #e0e0e0;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .select-box:focus {
+            outline: none;
+        }
         
         
     </style>
@@ -229,7 +248,7 @@
                     echo ("<div class='form-group'>");
                     echo ("<label for='transferir-tecnico'>Transferir Chamado para:</label>");
                     
-                    echo ("<select id='transferir-tecnico' name='idNovoTecnico'>");
+                    echo ("<select id='transferir-tecnico' class='select-box' name='idNovoTecnico'>");
                         echo ("<option value='0'>Selecione um técnico</option>");
                         $result = $conn->query("SELECT * FROM tb_usuario WHERE tipo_usuario = 2");
                         $count = $result->rowCount();
