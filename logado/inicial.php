@@ -166,6 +166,8 @@ if (!isset($_SESSION['idUsuario'])) {
 
     </h4>
     <a href="novo_chamado.php" class="back-btn">ABRIR CHAMADO</a>
+    <br>
+    <a href="novo_usuario.php" class="back-btn">CADASTRO DE USUARIO </a>
     <a href="../conexao/logout.php">Sair</a>
 </div>
 
